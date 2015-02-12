@@ -32,7 +32,7 @@ public class TopicSelection extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String topicName = parent.getItemAtPosition(position).toString();
                 String topicDescription = "";
-                Intent topicOverview = new Intent(TopicSelection.this, TopicOverview.class);
+                Intent topicOverview = new Intent(TopicSelection.this, MultiUseActivity.class);
                 if (topicName.equals("Math")) {
                     topicDescription = "Mathematics is the study of topics such as quantity (numbers), structure, space, and change. - Wiki";
                     questions = new String[] {

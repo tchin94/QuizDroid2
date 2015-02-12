@@ -28,6 +28,10 @@
             android:name=".AnswerSummary"
             android:label="@string/title_activity_answer_summary" >
         </activity>
+        <activity
+            android:name=".MultiUseActivity"
+            android:label="@string/title_activity_multi_use" >
+        </activity>
     </application>
 
 </manifest>

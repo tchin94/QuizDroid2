@@ -92,6 +92,7 @@ public class Question extends ActionBarActivity {
         super.onRestoreInstanceState(savedInstanceState);
         selected = savedInstanceState.getBoolean("selected");
     }
+
     //sets the answers and find which one is right
     public void setRadioAnswers(ArrayList<RadioButton> answer, String[] answers, int curQuestion) {
         for (int i = 0; i < 4; i++) {

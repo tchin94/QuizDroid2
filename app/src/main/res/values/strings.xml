@@ -7,5 +7,7 @@
     <string name="title_activity_topic_overview">Topic Overview</string>
     <string name="title_activity_question">Question</string>
     <string name="title_activity_answer_summary">Answer Summary</string>
+    <string name="title_activity_multi_use">QuizDroid</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

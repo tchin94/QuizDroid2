@@ -1,47 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="edu.washington.tchin94.quizdroid.AnswerSummary">
+    android:layout_height="match_parent"
+    tools:context="edu.washington.tchin94.quizdroid.AnswerSummaryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Your Answer: asdkj"
-        android:id="@+id/your_answer"
+        android:id="@+id/fragment_your_answer"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Correct Answer: asdasd"
-        android:id="@+id/correct_answer"
-        android:layout_below="@+id/your_answer"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        android:id="@+id/next_btn"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/fragment_correct_answer"
+        android:layout_below="@+id/fragment_your_answer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="You have _ out of _ correct."
-        android:id="@+id/total_score"
-        android:layout_above="@+id/next_btn"
+        android:id="@+id/fragment_total_score"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
