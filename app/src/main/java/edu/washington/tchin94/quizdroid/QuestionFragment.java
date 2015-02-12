@@ -103,6 +103,7 @@ public class QuestionFragment extends Fragment {
                         AnswerSummaryFragment.newInstance(yourAnswer, rightAnswer, correct, totalQuestion);
                 FragmentManager fragmentManager = getActivity().getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
                 fragmentTransaction.replace(R.id.fragment, answerSummaryFragment);
                 fragmentTransaction.commit();
             }

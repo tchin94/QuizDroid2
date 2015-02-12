@@ -62,10 +62,11 @@ public class MultiUseActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             //sets topic overview for first time
-            FragmentManager fragManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
             TopicOverviewFragment topicOverviewFrag =
                     TopicOverviewFragment.newInstance(topicName, topicDescription, numQuestions);
+            FragmentManager fragManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
             fragmentTransaction.add(R.id.fragment, topicOverviewFrag);
             fragmentTransaction.commit();
         }

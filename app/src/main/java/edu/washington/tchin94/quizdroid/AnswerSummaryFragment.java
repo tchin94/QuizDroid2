@@ -94,6 +94,7 @@ public class AnswerSummaryFragment extends Fragment {
                     QuestionFragment questionFragment = new QuestionFragment();
                     FragmentManager fragmentManager = getActivity().getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
                     fragmentTransaction.replace(R.id.fragment, questionFragment);
                     fragmentTransaction.commit();
                 }
