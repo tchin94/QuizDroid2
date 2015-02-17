@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * Created by Theo on 2/16/2015.
  */
 public class Topic implements Serializable{
+    private int icon;
     private String topicName;
     private String shortDesc;
     private String longDesc;
@@ -46,5 +47,13 @@ public class Topic implements Serializable{
 
     public void setQuestions(ArrayList<Quiz> questions) {
         this.questions = questions;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 }

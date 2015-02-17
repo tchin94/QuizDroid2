@@ -34,10 +34,13 @@ public class TopicSelection extends ActionBarActivity {
         ListView topics = (ListView) findViewById(R.id.topics);
         QuizApp quizApp = (QuizApp)getApplication();
         topicRepo = quizApp.getTopicRepo();
+
+        //only add topics again if the topic was empty the first time
         if (topicRepo.getTopicList().size() == 0) {
             addTopics();
         }
 
+        //sets the listview
         MyCustomAdapter adapter = new MyCustomAdapter();
         topics.setAdapter(adapter);
         AdapterView.OnItemClickListener topicClickListener = new AdapterView.OnItemClickListener() {
@@ -59,10 +62,14 @@ public class TopicSelection extends ActionBarActivity {
 
     }
 
+    //adds a new topic with descriptions, icon, and name
     private void addTopics() {
+        //gets a list of necessary components of all of the topics
         String[] topics = getTopicNames();
         String[] shortDesc = getTopicShortDesc();
         String[] longDesc = getTopicLongDesc();
+
+        //adds all of the topics into the topic repo
         for (int i = 0; i < topics.length; i++) {
             String topicName = topics[i];
             Topic newTopic = new Topic();
@@ -71,15 +78,18 @@ public class TopicSelection extends ActionBarActivity {
             newTopic.setLongDesc(longDesc[i]);
             ArrayList<Quiz> questions = getQuestions(topicName);
             newTopic.setQuestions(questions);
+            newTopic.setIcon(android.R.drawable.ic_search_category_default);
             topicRepo.addTopic(newTopic);
         }
     }
 
+    //retrieves all of the available topic names
     private String[] getTopicNames() {
         String[] topicNames = new String[] {"Math", "Physics", "Marvel Super Heroes"};
         return topicNames;
     }
 
+    //retrieves all of the short topic descriptions in order of the topics
     private String[] getTopicShortDesc() {
         String[] shortDesc = new String[] {
                 "Math, Numbers, Equations, Etc.",
@@ -89,6 +99,7 @@ public class TopicSelection extends ActionBarActivity {
         return shortDesc;
     }
 
+    //retrieves all of the long topic descriptions in order of the topics
     private String[] getTopicLongDesc() {
         String[] longDesc = new String[] {
                 "Mathematics is the study of topics such as quantity (numbers), structure, space, and change. - Wiki",
@@ -98,12 +109,14 @@ public class TopicSelection extends ActionBarActivity {
         return longDesc;
     }
 
+    //retrieves all of the questions based on the topic name
     private ArrayList<Quiz> getQuestions(String topicName) {
         ArrayList<Quiz> questions = new ArrayList<Quiz>();
         String[] questionList = getQuestionList(topicName);
         String[] answers = getAnswers(topicName);
         int[] correctAnswers = getCorrectAnswers(topicName);
 
+        //sets the question, answers, and gets the correct answers
         for (int i = 0; i < questionList.length; i++) {
             Quiz question = new Quiz();
             question.setQuestion(questionList[i]);
@@ -118,6 +131,7 @@ public class TopicSelection extends ActionBarActivity {
         return questions;
     }
 
+    //returns an array of correct answer numbers for each question in order
     private int[] getCorrectAnswers(String topicName) {
         if (topicName.equals("Math")) {
             int[] correctAnswers = new int[] {2, 0, 3, 1, 0};
@@ -131,6 +145,7 @@ public class TopicSelection extends ActionBarActivity {
         }
     }
 
+    //retrieves all of the answers in a string. 4 answers per question
     private String[] getAnswers(String topicName) {
         if (topicName.equals("Math")) {
             String[] answers = new String[] {
@@ -160,6 +175,7 @@ public class TopicSelection extends ActionBarActivity {
         }
     }
 
+    //returns a list of questions
     private String[] getQuestionList(String topicName) {
         if (topicName.equals("Math")) {
             String[] questionList = new String[]{
@@ -242,13 +258,17 @@ public class TopicSelection extends ActionBarActivity {
             System.out.println("getView " + position + " " + convertView);
             if (convertView ==null) {
                 convertView = mInflater.inflate(R.layout.single_row, parent, false);
+
+                //grabs all of the views
                 ImageView image = (ImageView) convertView.findViewById(R.id.list_image_icon);
                 TextView title = (TextView) convertView.findViewById(R.id.list_topic_name);
                 TextView description = (TextView) convertView.findViewById(R.id.list_description);
+
+                //sets the views
                 Topic topic = (Topic) getItem(position);
                 title.setText(topic.getTopicName());
                 description.setText(topic.getShortDesc());
-                image.setImageResource(android.R.drawable.ic_search_category_default);
+                image.setImageResource(topic.getIcon());
             }
             return convertView;
         }
