@@ -33,7 +33,6 @@ public class AnswerSummaryFragment extends Fragment {
                                                     int correct, int totalQuestion) {
         AnswerSummaryFragment answerSummaryFragment = new AnswerSummaryFragment();
         Bundle args = new Bundle();
-        Log.d("your answer: " + yourAnswer, "DEBUG your answer transferred");
         args.putString("yourAnswer", yourAnswer);
         args.putString("correctAnswer", correctAnswer);
         args.putInt("totalQuestion", totalQuestion);

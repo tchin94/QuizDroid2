@@ -16,21 +16,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class MultiUseActivity extends ActionBarActivity {
 
-    private String[] questions;
-    private String[] answers;
+    private Topic topic;
+    private ArrayList<Quiz> questions;
+    private String topicDescription;
     private int numQuestions;
     private int correct;
     private int curQuestion;
 
-    public String getQuestion(int i) {
-        return questions[i];
-    }
-
-    public String[] getAnswers() {
-        return answers;
+    public Quiz getQuestion() {
+        return questions.get(curQuestion);
     }
 
     public int getNumQuestions() {
@@ -52,18 +51,17 @@ public class MultiUseActivity extends ActionBarActivity {
 
         //grabs the questions and answers from previous intent
         Intent launcher = getIntent();
-        String topicName = launcher.getStringExtra("topicName");
-        String topicDescription = launcher.getStringExtra("topicDescription");
-        questions = launcher.getStringArrayExtra("questions");
-        answers = launcher.getStringArrayExtra("answers");
-        numQuestions = questions.length;
-        curQuestion = 0;
-        correct = 0;
+        topic = (Topic) launcher.getSerializableExtra("topic");
+        questions = topic.getQuestions();
+        topicDescription = topic.getLongDesc();
+        numQuestions = questions.size();
 
         if (savedInstanceState == null) {
             //sets topic overview for first time
+            curQuestion = 0;
+            correct = 0;
             TopicOverviewFragment topicOverviewFrag =
-                    TopicOverviewFragment.newInstance(topicName, topicDescription, numQuestions);
+                    TopicOverviewFragment.newInstance(topic.getTopicName(), topicDescription, numQuestions);
             FragmentManager fragManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);

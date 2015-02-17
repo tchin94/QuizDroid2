@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class QuestionFragment extends Fragment {
 
     private String rightAnswer;
+    private int rightAnswerNumber;
     private View rootView;
     private boolean selected = false;
 
@@ -44,16 +45,20 @@ public class QuestionFragment extends Fragment {
 
         //gets question and answers from the activity
         MultiUseActivity multiUseActivity = (MultiUseActivity)getActivity();
-        int curQuestion = multiUseActivity.getCurQuestion();
-        Log.d("" + curQuestion, "DEBUG");
-        String question = multiUseActivity.getQuestion(curQuestion);
-        String[] answers = multiUseActivity.getAnswers();
+        Quiz question = multiUseActivity.getQuestion();
+        rightAnswerNumber = question.getCorrectAnswer();
+        String[] answers = new String[] {
+                question.getAnswer1(),
+                question.getAnswer2(),
+                question.getAnswer3(),
+                question.getAnswer4()
+        };
 
         //sets the texts in the view
-        questionText.setText(question);
+        questionText.setText(question.getQuestion());
         ArrayList<RadioButton> answer = new ArrayList<RadioButton>();
         answer.add(answer1); answer.add(answer2); answer.add(answer3); answer.add(answer4);
-        setRadioAnswers(answer, answers, curQuestion);
+        setRadioAnswers(answer, answers);
 
         return rootView;
     }
@@ -65,6 +70,7 @@ public class QuestionFragment extends Fragment {
         //remembers if something is selected for the advance button
         if (savedInstanceState != null) {
             selected = savedInstanceState.getBoolean("selected");
+            rightAnswer = savedInstanceState.getString("rightAnswer");
         }
 
         Button submitBtn = (Button) getActivity().findViewById(R.id.advance_btn);
@@ -86,19 +92,16 @@ public class QuestionFragment extends Fragment {
                 RadioGroup group = (RadioGroup) rootView.findViewById(R.id.frag_answer_group);
                 RadioButton selected = (RadioButton) rootView.findViewById(group.getCheckedRadioButtonId());
                 MultiUseActivity multiUseActivity = (MultiUseActivity)getActivity();
-                if (selected.getContentDescription().equals("correct")) {
+
+                if (selected.getContentDescription().toString().equals("" + multiUseActivity.getQuestion().getCorrectAnswer())) {
                     multiUseActivity.addPoint();
                 }
 
                 //these are the param sent to the instance of the answer summary page
                 multiUseActivity.incrementCurQuestion();
-                Log.d("increment question", "DEBUG");
                 int correct = multiUseActivity.getCorrect();
                 int totalQuestion = multiUseActivity.getNumQuestions();
                 String yourAnswer = (String) selected.getText();
-
-                Log.d(yourAnswer, "DEBUG your answer");
-
                 AnswerSummaryFragment answerSummaryFragment =
                         AnswerSummaryFragment.newInstance(yourAnswer, rightAnswer, correct, totalQuestion);
                 FragmentManager fragmentManager = getActivity().getFragmentManager();
@@ -110,17 +113,12 @@ public class QuestionFragment extends Fragment {
         });
     }
 
-    public void setRadioAnswers(ArrayList<RadioButton> answer, String[] answers, int curQuestion) {
+    public void setRadioAnswers(ArrayList<RadioButton> answer, String[] answers) {
         for (int i = 0; i < 4; i++) {
-            String curAnswer = answers[i + (curQuestion * 4)];
-            if (curAnswer.endsWith("***")) {
-                curAnswer = curAnswer.substring(0, curAnswer.length() - 3);
-                rightAnswer = curAnswer;
-                answer.get(i).setContentDescription("correct");
-            } else {
-                answer.get(i).setContentDescription("wrong");
+            if (i == rightAnswerNumber) {
+                rightAnswer = answers[i];
             }
-            answer.get(i).setText(curAnswer);
+            answer.get(i).setText(answers[i]);
             answer.get(i).setOnClickListener(radioClickListener);
         }
     }
@@ -139,6 +137,7 @@ public class QuestionFragment extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putBoolean("selected", selected);
+        savedInstanceState.putString("rightAnswer", rightAnswer);
     }
 
 }

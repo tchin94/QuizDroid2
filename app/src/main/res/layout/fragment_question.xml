@@ -35,7 +35,8 @@
                 android:text="answer1"
                 android:id="@+id/frag_answer1"
                 android:layout_weight="0.1"
-                android:checked="false" />
+                android:checked="false"
+                android:contentDescription="0" />
 
             <RadioButton
                 android:layout_width="match_parent"
@@ -43,7 +44,8 @@
                 android:text="answer2"
                 android:id="@+id/frag_answer2"
                 android:layout_weight="0.1"
-                android:checked="false" />
+                android:checked="false"
+                android:contentDescription="1" />
 
             <RadioButton
                 android:layout_width="match_parent"
@@ -51,7 +53,8 @@
                 android:text="answer3"
                 android:id="@+id/frag_answer3"
                 android:layout_weight="0.1"
-                android:checked="false" />
+                android:checked="false"
+                android:contentDescription="2" />
 
             <RadioButton
                 android:layout_width="match_parent"
@@ -59,7 +62,9 @@
                 android:text="answer4"
                 android:id="@+id/frag_answer4"
                 android:layout_weight="0.1"
-                android:checked="false" />
+                android:checked="false"
+                android:clickable="false"
+                android:contentDescription="3" />
         </RadioGroup>
     </LinearLayout>
 
