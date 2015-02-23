@@ -1,7 +1,13 @@
 package edu.washington.tchin94.quizdroid;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,11 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -24,12 +30,18 @@ import java.util.ArrayList;
 
 public class TopicSelection extends ActionBarActivity {
 
+    private static final int TIME_UNIT = 1000; //minutes
+
     private TopicRepo topicRepo;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_selection);
+
+        Log.d("Topic Selection Created", "DEBUG");
+
 
         ListView topics = (ListView) findViewById(R.id.topics);
         QuizApp quizApp = (QuizApp)getApplication();
@@ -59,8 +71,46 @@ public class TopicSelection extends ActionBarActivity {
         };
 
         topics.setOnItemClickListener(topicClickListener);
-
+        setQuestionDownload();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cancelAlarmIfExists(TopicSelection.this, 0);
+    }
+
+    public void cancelAlarmIfExists(Context mContext,int requestCode){
+        try{
+            Intent myIntent = new Intent(mContext, QuestionReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, requestCode, myIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager am=(AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(pendingIntent);
+            pendingIntent.cancel();
+            Log.d("DEBUG removing old alarm", "true");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //sets periodic question download request
+    public void setQuestionDownload() {
+        Log.d("set question fetching", "DEBUG");
+        Intent questionIntent = new Intent(TopicSelection.this, QuestionReceiver.class);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        int interval = Integer.parseInt(pref.getString("time_interval", "5")) * TIME_UNIT;
+        String url = pref.getString("url_text", "www.fake.com");
+
+        Log.d("DEBUG url", url);
+        Log.d("DEBUG time interval", interval + "");
+
+        questionIntent.putExtra("url", url);
+        pendingIntent = PendingIntent.getBroadcast(TopicSelection.this, 0, questionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, (System.currentTimeMillis() + interval), interval, pendingIntent);
+        Toast.makeText(this, "Alarm Set every " + ((interval/1000) / 60) + " minutes", Toast.LENGTH_SHORT).show();
+    }
+
 
     //adds a new topic with descriptions, icon, and name
     private void addTopics() {
@@ -221,12 +271,19 @@ public class TopicSelection extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent settings = new Intent(TopicSelection.this, SettingsActivity.class);
+            startActivity(settings);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    Preference.OnPreferenceChangeListener prefChangeListener = new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            TopicSelection.this.setQuestionDownload();
+            return true;
+        }
+    };
 
     //custom adapter for list view
     private class MyCustomAdapter extends BaseAdapter {
