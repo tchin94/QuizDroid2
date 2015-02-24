@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.washington.tchin94.quizdroid" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".TopicSelection"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TopicOverview"
+            android:label="@string/title_activity_topic_overview" >
+        </activity>
+        <activity
+            android:name=".Question"
+            android:label="@string/title_activity_question" >
+        </activity>
+        <activity
+            android:name=".AnswerSummary"
+            android:label="@string/title_activity_answer_summary" >
+        </activity>
+        <activity
+            android:name=".MultiUseActivity"
+            android:label="@string/title_activity_multi_use" >
+        </activity>
+    </application>
+
+</manifest>

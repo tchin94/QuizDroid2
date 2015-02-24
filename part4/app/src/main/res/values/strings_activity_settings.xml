@@ -1,0 +1,16 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_url_name">URL</string>
+    <string name="pref_default_url_name">http://tednewardsandbox.site44.com/questions.json</string>
+
+    <string name="pref_title_interval_name">Interval (minutes)</string>
+    <string name="pref_default_interval_name">5</string>
+
+
+</resources>
