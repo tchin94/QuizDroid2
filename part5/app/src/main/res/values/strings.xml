@@ -10,5 +10,16 @@
     <string name="title_activity_multi_use">QuizDroid</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_quiz_app">QuizApp</string>
+    <string name="connect_error_message">Do you want to turn off Airplane Mode?</string>
+    <string name="connect_error_title">Airplane Mode On</string>
+    <string name="download_error_title">Download Failed</string>
+    <string name="download_error_message">There was a problem with your download.</string>
+    <string name="retry">Retry</string>
+    <string name="quit">Quit</string>
+    <string name="ok">Okay</string>
+    <string name="reload_title">Refresh Questions</string>
+    <string name="reload_message">Press Okay to Refresh Questions.</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_download_fail">DownloadFail</string>
 
 </resources>

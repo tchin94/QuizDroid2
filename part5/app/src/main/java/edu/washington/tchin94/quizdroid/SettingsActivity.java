@@ -34,7 +34,7 @@ public class SettingsActivity extends PreferenceActivity {
      * shown on tablets.
      */
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
-    private static final int TIME_UNIT = 1000; //minutes
+    private static final int TIME_UNIT = 1000 * 60; //minutes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,6 +3,7 @@
     package="edu.washington.tchin94.quizdroid" >
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -54,6 +55,16 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+
+        <service
+            android:name=".DownloadService"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name=".DownloadFail"
+            android:label="@string/title_activity_download_fail" >
+        </activity>
     </application>
 
 </manifest>

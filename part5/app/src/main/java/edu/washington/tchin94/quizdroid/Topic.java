@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Topic implements Serializable{
     private int icon;
     private String topicName;
-    private String shortDesc;
     private String longDesc;
     private ArrayList<Quiz> questions;
 
@@ -31,14 +30,6 @@ public class Topic implements Serializable{
 
     public void setLongDesc(String longDesc) {
         this.longDesc = longDesc;
-    }
-
-    public String getShortDesc() {
-        return shortDesc;
-    }
-
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
     }
 
     public ArrayList<Quiz> getQuestions() {

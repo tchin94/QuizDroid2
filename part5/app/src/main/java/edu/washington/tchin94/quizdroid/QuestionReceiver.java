@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.logging.Handler;
+
 public class QuestionReceiver extends BroadcastReceiver {
 
     public QuestionReceiver() {
@@ -17,10 +19,7 @@ public class QuestionReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
 //        String url = intent.getStringExtra("url");
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String defaultURL = "http://tednewardsandbox.site44.com/questions.json";
-        String url = pref.getString("url_text", defaultURL);
-        Log.d("DEBUG url received", url);
-        Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
+        Intent mServiceIntent = new Intent(context, DownloadService.class);
+        context.startService(mServiceIntent);
     }
 }
